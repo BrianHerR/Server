@@ -2,7 +2,7 @@ const express = require('express');
 const server = express();
 const router = require('./routes/index')
 const PORT = 3001;
-
+const { conn } = require('./src/DB_connection')
 
 
 server.use((req, res, next) => {
@@ -23,10 +23,11 @@ server.use(express.json());
 
 server.use('/rickandmorty', router);
 
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
+   await conn.sync({ force:true })
    console.log('Server raised in port: ' + PORT);
 });
 
-    module.exports = server;
+module.exports = server;
 
     
